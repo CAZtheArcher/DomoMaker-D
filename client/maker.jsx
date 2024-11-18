@@ -38,10 +38,10 @@ const DomoForm = (props) => {
 };
 
 const DomoList = (props) => {
-    const [domos, setDomos] = useState(props.Domos);
+    const [domos, setDomos] = useState(props.domos);
 
     useEffect(() => {
-        const loadDomosFromServer = async() => {
+        const loadDomosFromServer = async () => {
             const response = await fetch('/getDomos');
             const data = await response.json();
             setDomos(data.domos);
