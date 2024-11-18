@@ -20,6 +20,21 @@ const handleDomo = (e, onDomoAdded) => {
     return false;
 };
 
+const handleRemove = (e, onDomoRemoved) => {
+    e.preventDefault();
+    helper.hideError();
+
+    const name = e.target.querySelector("#domoName").value;
+
+    if(!name) {
+        helper.handleError('Name field is required!');
+        return false;
+    }
+
+    helper.sendPost(e.target.action, { name }, onDomoRemoved);
+    return false;
+};
+
 const DomoForm = (props) => {
     return(
         <form id="domoForm"
@@ -37,6 +52,22 @@ const DomoForm = (props) => {
             <label htmlFor="power">PowLVL: </label>
             <input id="domoPower" type="number" min="0" name="power" placeholder='power level' />
             <input className="makeDomoSubmit" type="submit" value="Make Domo" />
+        </form>
+    );
+};
+
+const RemoveDomoForm = (props) => {
+    return(
+        <form id="domoForm"
+        onSubmit={(e) => handleRemove(e, props.triggerReload)}
+            name="domoForm"
+            action="/deleteDomo"
+            method="POST"
+            className="domoForm"
+        >
+            <label htmlFor="name">Name: </label>
+            <input id="domoName" type="text" name="name" placeholder="Domo to Remove" />
+            <input className="makeDomoSubmit" type="submit" value="Remove Domo" />
         </form>
     );
 };
@@ -86,6 +117,9 @@ const App = () => {
         <div>
             <div id="makeDomo">
                 <DomoForm triggerReload={() => setReloadDomos(!reloadDomos)} />
+            </div>
+            <div id="makeDomo">
+                <RemoveDomoForm triggerReload={() => setReloadDomos(!reloadDomos)} />
             </div>
             <div id="domos">
                 <DomoList domos={[]} reloadDomos={reloadDomos} />

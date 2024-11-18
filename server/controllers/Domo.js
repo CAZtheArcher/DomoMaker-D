@@ -41,13 +41,18 @@ const getDomos = async (req, res) => {
   }
 };
 
-const deleteDomos = async (req, res) => {
-  await Domo.deleteOne({ name: req.body.name });
+const deleteDomo = async (req, res) => {
+  if (!req.body.name) {
+    return res.status(400).json({ error: 'Name of domo to remove is required!' });
+  }
+  const deletedDomos = await Domo.deleteOne({ name: req.body.name });
+
+  return res.status(200).json({ deleteCount: deletedDomos.deletedCount });
 };
 
 module.exports = {
   makerPage,
   makeDomo,
   getDomos,
-  deleteDomos,
+  deleteDomo,
 };
