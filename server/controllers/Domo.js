@@ -32,7 +32,7 @@ const makeDomo = async (req, res) => {
 const getDomos = async (req, res) => {
   try {
     const query = { owner: req.session.account._id };
-    const docs = await Domo.find(query).select('name age').lean().exec();
+    const docs = await Domo.find(query).select('name age power').lean().exec();
 
     return res.json({ domos: docs });
   } catch (err) {
@@ -41,8 +41,13 @@ const getDomos = async (req, res) => {
   }
 };
 
+const deleteDomos = async (req, res) => {
+  await Domo.deleteOne({ name: req.body.name });
+};
+
 module.exports = {
   makerPage,
   makeDomo,
   getDomos,
+  deleteDomos,
 };

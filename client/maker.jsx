@@ -9,13 +9,14 @@ const handleDomo = (e, onDomoAdded) => {
 
     const name = e.target.querySelector('#domoName').value;
     const age = e.target.querySelector('#domoAge').value;
+    const power = e.target.querySelector('#domoPower').value;
 
-    if(!name || !age) {
+    if(!name || !age || !power) {
         helper.handleError('All fields are required!');
         return false;
     }
 
-    helper.sendPost(e.target.action, { name, age }, onDomoAdded);
+    helper.sendPost(e.target.action, { name, age, power }, onDomoAdded);
     return false;
 };
 
@@ -31,9 +32,10 @@ const DomoForm = (props) => {
             <label htmlFor="name">Name: </label>
             <input id="domoName" type="text" name="name" placeholder="Domo Name" />
             <label htmlFor="age">Age: </label>
-            <input id="domoAge" type="number" min="0" name="age" />
-            <label htmlFor="power">Power Level: </label>
-            <input id="domoPower" type="number" min="0" name="power" />
+            <input id="domoAge" type="number" min="0" name="age" placeholder='age' />
+
+            <label htmlFor="power">PowLVL: </label>
+            <input id="domoPower" type="number" min="0" name="power" placeholder='power level' />
             <input className="makeDomoSubmit" type="submit" value="Make Domo" />
         </form>
     );
